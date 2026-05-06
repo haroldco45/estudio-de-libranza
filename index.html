@@ -4,168 +4,170 @@
     <meta charset="UTF-8">
     <title>DISTRILECO - Sistema Oficial de Estudio de Libranza</title>
     <style>
-        :root { --vp-gold: #d4af37; --vp-dark: #1a1a1a; --vp-green: #27ae60; --distrileco-blue: #003366; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .vp-header { background: var(--vp-dark); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--vp-gold); }
-        .vp-logo { font-size: 28px; font-weight: bold; letter-spacing: 2px; }
-        .datetime { font-size: 0.9em; color: var(--vp-gold); margin-top: 5px; }
-        .main-content { padding: 30px; display: grid; grid-template-columns: 1fr 350px; gap: 25px; }
-        label { display: block; margin: 8px 0 3px; font-weight: 600; font-size: 0.8em; color: #555; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 8px; box-sizing: border-box; font-size: 0.9em; }
-        .btn-analizar { background: var(--distrileco-blue); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; font-weight: bold; text-transform: uppercase; border-radius: 5px; font-size: 16px; margin-top: 15px; transition: 0.3s; }
-        .btn-analizar:hover { background: #004080; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .btn-ley { background: var(--vp-dark); color: var(--vp-gold); border: 2px solid var(--vp-gold); padding: 12px; width: 100%; cursor: pointer; font-weight: bold; border-radius: 5px; font-size: 13px; margin-top: 10px; text-align: center; text-decoration: none; display: block; }
-        .btn-ley:hover { background: var(--vp-gold); color: white; }
-        .history-section { background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #eee; height: 750px; overflow-y: auto; }
-        .historial-item { font-size: 0.8em; padding: 10px; border: 1px solid #ddd; background: white; margin-bottom: 8px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
-        #reporte-final { display: none; padding: 40px; border-top: 2px dashed #ccc; position: relative; }
-        @media print {
-            .no-print, .vp-header, .history-section, .btn-analizar, .btn-ley { display: none !important; }
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; border: none; width: 100%; max-width: 100%; }
-            #reporte-final { display: block !important; border: none; padding: 0; }
-            .main-content { display: block; padding: 0; }
-        }
+        :root { --vp-gold: #d4af37; --vp-dark: #1a1a1a; --distrileco-blue: #003366; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .vp-header { background: var(--vp-dark); color: white; padding: 15px; text-align: center; border-bottom: 4px solid var(--vp-gold); }
+        .main-content { padding: 25px; display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+        .form-section { background: #fff; }
+        h3 { color: var(--distrileco-blue); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        label { display: block; margin: 10px 0 3px; font-weight: 600; font-size: 13px; color: #444; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-analizar { background: var(--distrileco-blue); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; font-weight: bold; border-radius: 5px; margin-top: 20px; font-size: 16px; transition: 0.3s; }
+        .btn-analizar:hover { background: #004a99; transform: translateY(-2px); }
+        .btn-ley { background: #f8f9fa; color: #333; border: 1px solid #ccc; padding: 10px; width: 100%; cursor: pointer; border-radius: 5px; margin-top: 10px; text-align: center; text-decoration: none; display: block; font-size: 13px; }
+        .history-section { background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; max-height: 600px; overflow-y: auto; }
+        #reporte-final { display: none; padding: 40px; border-top: 3px double #333; margin-top: 20px; background: #fff; }
         table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th, td { border: 1px solid #333; padding: 10px; text-align: left; font-size: 0.9em; }
-        .check-box { display: inline-block; width: 18px; height: 18px; border: 2px solid #000; margin-right: 5px; vertical-align: middle; }
-        .clausula-blindada { background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; font-size: 0.85em; margin-top: 15px; text-align: justify; line-height: 1.4; }
-        .legal-footer { font-size: 10px; text-align: center; color: #777; margin-top: 40px; border-top: 1px solid #eee; padding-top: 10px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+        .check-box { display: inline-block; width: 15px; height: 15px; border: 1px solid #000; margin-right: 5px; vertical-align: middle; }
+        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; width: 100%; } #reporte-final { display: block !important; padding: 0; } }
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="vp-header no-print">
-        <div class="vp-logo">DISTRILECO CAUCASIA SAS</div>
-        <div id="reloj" class="datetime">Colombia: --/--/---- | --:--:--</div>
+        <h2 style="margin:0; letter-spacing:1px;">DISTRILECO CAUCASIA SAS</h2>
+        <div id="reloj" style="font-size: 12px; color: var(--vp-gold); margin-top: 5px;"></div>
     </div>
-    <div class="main-content">
-        <div class="form-section no-print">
-            <h3 style="margin-top:0; color: var(--distrileco-blue);">📋 Estudio Técnico de Libranza</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+    <div class="main-content no-print">
+        <div class="form-section">
+            <h3>📋 Datos del Estudio</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div>
-                    <label>Empresa Pagadora:</label>
-                    <input type="text" id="emp" value="DISTRILECO CAUCASIA SAS" readonly>
                     <label>Nombre del Trabajador:</label>
                     <input type="text" id="nom" placeholder="Nombre completo">
                     <label>Cédula:</label>
-                    <input type="text" id="cc" placeholder="C.C.">
-                    <label>Cargo Actual:</label>
-                    <input type="text" id="cargo" placeholder="Ej: Jefe de Almacén">
+                    <input type="text" id="cc" placeholder="Número de identificación">
+                    <label>Cargo:</label>
+                    <input type="text" id="cargo" placeholder="Puesto que desempeña">
                 </div>
                 <div>
-                    <label>Entidad Bancaria:</label>
+                    <label>Entidad Financiera:</label>
                     <input type="text" id="banco" placeholder="Ej: Bancolombia">
-                    <label>Salario Base Mensual ($):</label>
-                    <input type="number" id="sal" value="1014980">
-                    <label>Cuota Solicitada ($):</label>
-                    <input type="number" id="cuo" value="288000">
-                    <label>Antigüedad:</label>
-                    <input type="text" id="tiempo" placeholder="Ej: 4 años">
+                    <label>Salario Mensual ($):</label>
+                    <input type="number" id="sal" value="1300000">
+                    <label>Cuota Mensual ($):</label>
+                    <input type="number" id="cuo" value="0">
                 </div>
             </div>
-            <button class="btn-analizar" onclick="ejecutarAnalisis()">GENERAR ESTUDIO Y AUTORIZACIÓN</button>
-            <a href="ley15272012.html" target="_blank" class="btn-ley">📄 CONSULTAR LEY 1527 DE 2012</a>
-            <div style="text-align: center; color: #888; font-size: 11px; margin-top: 20px;">Desarrollado por VIBRAS POSITIVAS HM</div>
+            <button class="btn-analizar" onclick="ejecutarAnalisis()">GENERAR REPORTE OFICIAL</button>
+            <a href="ley15272012.html" target="_blank" class="btn-ley">📄 Consultar Ley 1527 de 2012</a>
         </div>
-        <div class="history-section no-print">
-            <h4 style="margin-top:0; border-bottom: 2px solid var(--distrileco-blue)">📜 Historial de Estudios</h4>
-            <div id="lista-historial"></div>
+
+        <div class="history-section">
+            <h4 style="margin-top:0;">📜 Historial Local</h4>
+            <div id="lista-historial" style="font-size: 12px; color: #666;">Sin registros previos.</div>
         </div>
     </div>
+
     <div id="reporte-final">
         <div style="text-align:center;">
-            <h1>DISTRILECO CAUCASIA SAS</h1>
-            <p>NIT: 800183056-9</p>
-            <hr style="border: 1px solid #000;">
-            <h3 style="text-decoration: underline;">CERTIFICACIÓN DE VIABILIDAD Y AUTORIZACIÓN DE LIBRANZA</h3>
+            <h2 style="margin:0;">DISTRILECO CAUCASIA SAS</h2>
+            <p style="margin:5px 0;">NIT: 800183056-9</p>
+            <h4 style="text-decoration: underline;">CERTIFICACIÓN DE VIABILIDAD - CRÉDITO DE LIBRANZA</h4>
         </div>
-        <p><strong>FECHA:</strong> <span id="rep-fecha"></span></p>
+
+        <p><strong>FECHA DE EMISIÓN:</strong> <span id="rep-fecha"></span></p>
+
         <table>
-            <tr><th colspan="4" style="background:#f2f2f2; text-align:center;">I. INFORMACIÓN DEL TRABAJADOR</th></tr>
+            <tr style="background:#f2f2f2;"><th colspan="4">I. IDENTIFICACIÓN DEL SOLICITANTE</th></tr>
             <tr>
-                <td><strong>Nombre:</strong></td><td id="rep-nom"></td>
-                <td><strong>Cédula:</strong></td><td id="rep-cc"></td>
+                <td width="20%"><strong>Nombre:</strong></td><td id="rep-nom" width="30%"></td>
+                <td width="20%"><strong>Cédula:</strong></td><td id="rep-cc" width="30%"></td>
             </tr>
             <tr>
                 <td><strong>Cargo:</strong></td><td id="rep-cargo"></td>
-                <td><strong>Antigüedad:</strong></td><td id="rep-tiempo"></td>
+                <td><strong>Salario Base:</strong></td><td id="rep-sal"></td>
             </tr>
         </table>
+
         <table>
-            <tr><th colspan="4" style="background:#f2f2f2; text-align:center;">II. ANÁLISIS FINANCIERO</th></tr>
+            <tr style="background:#f2f2f2;"><th colspan="4">II. CONDICIONES FINANCIERAS</th></tr>
             <tr>
-                <td>Salario:</td><td id="rep-sal"></td>
-                <td>Entidad:</td><td id="rep-banco"></td>
+                <td width="25%">Entidad:</td><td id="rep-banco" width="25%"></td>
+                <td width="25%">Cuota:</td><td id="rep-cuo" width="25%"></td>
             </tr>
             <tr>
-                <td><strong>Cuota:</strong></td><td id="rep-cuo"></td>
-                <td><strong>% Afectación:</strong></td><td><strong id="rep-por"></strong></td>
+                <td colspan="2"><strong>Porcentaje de Afectación de Nómina:</strong></td>
+                <td colspan="2"><strong id="rep-por" style="font-size:18px;"></strong></td>
             </tr>
         </table>
-        <div style="margin: 20px 0; border: 2px solid #000; padding: 15px; text-align: center; font-weight: bold;">
-            DICTAMEN GERENCIAL: &nbsp;&nbsp; <span class="check-box"></span> AUTORIZADO &nbsp;&nbsp;&nbsp; <span class="check-box"></span> NO AUTORIZADO
+
+        <div style="border: 2px solid #000; padding: 15px; margin: 20px 0; text-align: center;">
+            <strong>RESULTADO:</strong> &nbsp;&nbsp;&nbsp; 
+            <span class="check-box"></span> VIABLE &nbsp;&nbsp;&nbsp; 
+            <span class="check-box"></span> NO VIABLE
         </div>
-        <div class="clausula-blindada">
-            <strong>AVISO LEGAL (Ley 1527 de 2012):</strong> El trabajador autoriza a DISTRILECO CAUCASIA SAS a descontar de su nómina la cuota mencionada. La empresa actúa como agente retenedor. En caso de retiro, se autoriza el descuento de saldos de las prestaciones sociales.
+
+        <p style="font-size: 11px; text-align: justify; color: #333;">
+            <strong>NOTA LEGAL:</strong> Esta certificación se emite bajo el marco de la <strong>Ley 1527 de 2012</strong>. El trabajador autoriza a DISTRILECO CAUCASIA SAS a realizar los descuentos respectivos de su salario y, en caso de retiro, de sus prestaciones sociales definitivas.
+        </p>
+
+        <div style="margin-top: 60px; display: flex; justify-content: space-between;">
+            <div style="width: 40%; border-top: 1px solid #000; text-align: center; font-size: 12px;">Firma del Trabajador</div>
+            <div style="width: 40%; border-top: 1px solid #000; text-align: center; font-size: 12px;">Autorizado - Gerencia Distrileco</div>
         </div>
-        <div style="margin-top: 70px; display: flex; justify-content: space-between; text-align: center;">
-            <div style="width: 45%; border-top: 1px solid #000;">Firma del Trabajador</div>
-            <div style="width: 45%; border-top: 1px solid #000;">Firma Gerencia</div>
+
+        <div style="margin-top: 40px; text-align: center; font-size: 10px; color: #999; border-top: 1px solid #eee; padding-top: 10px;">
+            Software de Gestión - <strong>VIBRAS POSITIVAS HM</strong> &copy; 2026
         </div>
-        <div class="legal-footer">Generado por VIBRAS POSITIVAS HM &copy; 2026 | Derechos de Autor Reservados</div>
-        <button class="no-print btn-analizar" onclick="window.print()">🖨️ IMPRIMIR REPORTE OFICIAL</button>
+        
+        <button class="no-print btn-analizar" onclick="window.print()" style="background:#27ae60;">🖨️ IMPRIMIR ESTUDIO</button>
     </div>
 </div>
+
 <script>
     function actualizarReloj() {
-        const op = { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-        document.getElementById('reloj').innerText = `Colombia: ${new Date().toLocaleDateString('es-CO')} | ${new Date().toLocaleTimeString('es-CO', op)}`;
+        const ahora = new Date();
+        document.getElementById('reloj').innerText = "Caucasia, Antioquia: " + ahora.toLocaleString('es-CO');
     }
     setInterval(actualizarReloj, 1000);
 
     function ejecutarAnalisis() {
-        const d = {
-            nom: document.getElementById('nom').value,
-            cc: document.getElementById('cc').value,
-            cargo: document.getElementById('cargo').value,
-            tiempo: document.getElementById('tiempo').value,
-            banco: document.getElementById('banco').value,
-            sal: parseFloat(document.getElementById('sal').value),
-            cuo: parseFloat(document.getElementById('cuo').value),
-            fecha: new Date().toLocaleString('es-CO')
-        };
-        if(!d.nom || !d.cc) return alert("Ingrese nombre y cédula.");
-        const por = (d.cuo / d.sal) * 100;
-        document.getElementById('rep-nom').innerText = d.nom;
-        document.getElementById('rep-cc').innerText = d.cc;
-        document.getElementById('rep-cargo').innerText = d.cargo;
-        document.getElementById('rep-tiempo').innerText = d.tiempo;
-        document.getElementById('rep-banco').innerText = d.banco;
-        document.getElementById('rep-sal').innerText = "$ " + d.sal.toLocaleString();
-        document.getElementById('rep-cuo').innerText = "$ " + d.cuo.toLocaleString();
-        document.getElementById('rep-por').innerText = por.toFixed(2) + "%";
-        document.getElementById('rep-fecha').innerText = d.fecha;
+        // 1. Obtener valores de los campos
+        const nombre = document.getElementById('nom').value;
+        const cedula = document.getElementById('cc').value;
+        const cargo = document.getElementById('cargo').value;
+        const banco = document.getElementById('banco').value;
+        const salario = parseFloat(document.getElementById('sal').value) || 0;
+        const cuota = parseFloat(document.getElementById('cuo').value) || 0;
+
+        // 2. Validar que no estén vacíos
+        if (!nombre || !cedula || cuota <= 0) {
+            alert("Socio, por favor completa el nombre, la cédula y una cuota válida.");
+            return;
+        }
+
+        // 3. Cálculos
+        const porcentaje = (cuota / salario) * 100;
+        const fechaActual = new Date().toLocaleDateString('es-CO');
+
+        // 4. Llenar el reporte
+        document.getElementById('rep-nom').innerText = nombre;
+        document.getElementById('rep-cc').innerText = cedula;
+        document.getElementById('rep-cargo').innerText = cargo;
+        document.getElementById('rep-banco').innerText = banco;
+        document.getElementById('rep-sal').innerText = "$ " + salario.toLocaleString();
+        document.getElementById('rep-cuo').innerText = "$ " + cuota.toLocaleString();
+        document.getElementById('rep-por').innerText = porcentaje.toFixed(2) + "%";
+        document.getElementById('rep-fecha').innerText = fechaActual;
+
+        // 5. MOSTRAR EL REPORTE (Esto es lo que estaba fallando)
         document.getElementById('reporte-final').style.display = 'block';
         
-        let h = JSON.parse(localStorage.getItem('backup_estudios')) || [];
-        h.unshift(d);
-        localStorage.setItem('backup_estudios', JSON.stringify(h));
-        renderBackup();
-    }
+        // 6. Scroll suave hacia el reporte
+        window.scrollTo({ top: document.getElementById('reporte-final').offsetTop, behavior: 'smooth' });
 
-    function renderBackup() {
-        const l = document.getElementById('lista-historial');
-        let h = JSON.parse(localStorage.getItem('backup_estudios')) || [];
-        l.innerHTML = h.map((i) => `
-            <div class="historial-item">
-                <strong>👤 ${i.nom}</strong><br>
-                <small>💰 $${i.cuo.toLocaleString()} | 📅 ${i.fecha}</small>
-            </div>
-        `).join('') || "<p style='font-size:12px;'>Sin registros.</p>";
+        // Guardar en historial
+        const registro = `👤 ${nombre} - ${banco} ($${cuota.toLocaleString()})`;
+        const lista = document.getElementById('lista-historial');
+        if (lista.innerText.includes("Sin registros")) lista.innerHTML = "";
+        lista.innerHTML = `<div>${registro}</div>` + lista.innerHTML;
     }
-    renderBackup();
 </script>
+
 </body>
 </html>
