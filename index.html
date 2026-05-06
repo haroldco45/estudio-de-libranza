@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DISTRILECO - Sistema Oficial de Estudio de Libranza</title>
+    <style>
+        :root { --vp-gold: #d4af37; --vp-dark: #1a1a1a; --vp-green: #27ae60; --distrileco-blue: #003366; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        
+        .vp-header { background: var(--vp-dark); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--vp-gold); }
+        .vp-logo { font-size: 28px; font-weight: bold; letter-spacing: 2px; }
+        .datetime { font-size: 0.9em; color: var(--vp-gold); margin-top: 5px; }
+
+        .main-content { padding: 30px; display: grid; grid-template-columns: 1fr 350px; gap: 25px; }
+        
+        label { display: block; margin: 8px 0 3px; font-weight: 600; font-size: 0.8em; color: #555; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 8px; box-sizing: border-box; font-size: 0.9em; }
+        
+        .btn-analizar { background: var(--distrileco-blue); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; font-weight: bold; text-transform: uppercase; border-radius: 5px; font-size: 16px; margin-top: 15px; transition: 0.3s; }
+        .btn-analizar:hover { background: #004080; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        .btn-ley { background: var(--vp-dark); color: var(--vp-gold); border: 2px solid var(--vp-gold); padding: 12px; width: 100%; cursor: pointer; font-weight: bold; border-radius: 5px; font-size: 13px; margin-top: 10px; text-align: center; text-decoration: none; display: block; }
+        .btn-ley:hover { background: var(--vp-gold); color: white; }
+        
+        .history-section { background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #eee; height: 750px; overflow-y: auto; }
+        .historial-item { font-size: 0.8em; padding: 10px; border: 1px solid #ddd; background: white; margin-bottom: 8px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+        .historial-item:hover { border-color: var(--vp-gold); }
+
+        #reporte-final { display: none; padding: 40px; border-top: 2px dashed #ccc; position: relative; }
+        
+        @media print {
+            .no-print, .vp-header, .history-section, .btn-analizar, .btn-ley { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; border: none; width: 100%; max-width: 100%; }
+            #reporte-final { display: block !important; border: none; padding: 0; }
+            .main-content { display: block; padding: 0; }
+        }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { border: 1px solid #333; padding: 10px; text-align: left; font-size: 0.9em; }
+        .check-box { display: inline-block; width: 18px; height: 18px; border: 2px solid #000; margin-right: 5px; vertical-align: middle; }
+        .clausula-blindada { background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; font-size: 0.85em; margin-top: 15px; text-align: justify; line-height: 1.4; }
+        .legal-footer { font-size: 10px; text-align: center; color: #777; margin-top: 40px; border-top: 1px solid #eee; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="vp-header no-print">
+        <div class="vp-logo">DISTRILECO CAUCASIA SAS</div>
+        <div class="datetime" id="reloj">Colombia: --/--/---- | --:--:--</div>
+    </div>
+
+    <div class="main-content">
+        <div class="form-section no-print">
+            <h3 style="margin-top:0; color: var(--distrileco-blue);">📋 Estudio Técnico de Libranza</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <label>Empresa Pagadora:</label>
+                    <input type="text" id="emp" value="DISTRILECO CAUCASIA SAS" readonly>
+                    <label>NIT:</label>
+                    <input type="text" id="nit" value="800183056-9" readonly>
+                    <label>Nombre del Trabajador:</label>
+                    <input type="text" id="nom" placeholder="Nombre completo">
+                    <label>Cédula:</label>
+                    <input type="text" id="cc" placeholder="C.C.">
+                    <label>Cargo:</label>
+                    <input type="text" id="cargo" placeholder="Ej: Jefe de Almacén">
+                    <label>Antigüedad:</label>
+                    <input type="text" id="tiempo" placeholder="Ej: 4 años">
+                </div>
+                <div>
+                    <label>Banco / Entidad:</label>
+                    <input type="text" id="banco" placeholder="Ej: Bancolombia">
+                    <label>Tipo de Crédito:</label>
+                    <select id="tipo">
+                        <option value="NUEVA LIBRANZA">Nueva Libranza</option>
+                        <option value="RETANQUEO">Retanqueo / Refinanciación</option>
+                    </select>
+                    <label>Finalidad:</label>
+                    <input type="text" id="finalidad" placeholder="Ej: Vivienda">
+                    <label>Otros Ingresos ($):</label>
+                    <input type="number" id="otros" value="0">
+                    <label>Salario Mensual ($):</label>
+                    <input type="number" id="sal" value="1014980">
+                    <label>Cuota Solicitada ($):</label>
+                    <input type="number" id="cuo" value="288000">
+                </div>
+            </div>
+            
+            <button class="btn-analizar" onclick="ejecutarAnalisisFinal()">GENERAR ESTUDIO Y AUTORIZACIÓN</button>
+            
+            <a href="ley15272012.html" target="_blank" class="btn-ley">📄 CONSULTAR LEY 1527 DE 2012</a>
+            
+            <div style="text-align: center; color: #888; font-size: 11px; margin-top: 20px;">
+                Desarrollado por VIBRAS POSITIVAS HM
+            </div>
+        </div>
+
+        <div class="history-section no-print">
+            <h4 style="margin-top:0; border-bottom: 2px solid var(--distrileco-blue)">📜 Historial de Estudios</h4>
+            <div id="lista-historial"></div>
+            <button onclick="borrarTodo()" style="color:red; background:none; border:none; cursor:pointer; font-size:11px; margin-top:10px;">🗑️ Limpiar Backup</button>
+        </div>
+    </div>
+
+    <div id="reporte-final">
+        <div style="text-align:center;">
+            <h1 style="text-transform:uppercase; margin-bottom:5px;">DISTRILECO CAUCASIA SAS</h1>
+            <p style="margin:0;">NIT: 800183056-9</p>
+            <hr style="border: 1px solid #000;">
+            <h3 style="margin-top:10px; text-decoration: underline;">CERTIFICACIÓN DE VIABILIDAD Y AUTORIZACIÓN DE LIBRANZA</h3>
+        </div>
+
+        <p><strong>FECHA:</strong> <span id="rep-fecha"></span></p>
+
+        <table>
+            <tr><th colspan="4" style="background:#f2f2f2; text-align:center;">I. INFORMACIÓN DEL TRABAJADOR</th></tr>
+            <tr>
+                <td width="20%"><strong>Nombre:</strong></td><td id="rep-nom" width="30%"></td>
+                <td width="20%"><strong>Cédula:</strong></td><td id="rep-cc" width="30%"></td>
+            </tr>
+            <tr>
+                <td><strong>Cargo:</strong></td><td id="rep-cargo"></td>
+                <td><strong>Antigüedad:</strong></td><td id="rep-tiempo"></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr><th colspan="4" style="background:#f2f2f2; text-align:center;">II. ANÁLISIS FINANCIERO</th></tr>
+            <tr>
+                <td width="25%">Salario:</td><td id="rep-sal" width="25%"></td>
+                <td width="25%">Banco:</td><td id="rep-banco" width="25%"></td>
+            </tr>
+            <tr>
+                <td><strong>Cuota:</strong></td><td id="rep-cuo"></td>
+                <td><strong>% Afectación:</strong></td><td><strong id="rep-por"></strong></td>
+            </tr>
+        </table>
+
+        <div style="margin: 20px 0; border: 2px solid #000; padding: 15px; text-align: center; font-weight: bold;">
+            DICTAMEN: &nbsp;&nbsp; <span class="check-box"></span> AUTORIZADO &nbsp;&nbsp;&nbsp; <span class="check-box"></span> NO AUTORIZADO
+        </div>
+
+        <div class="clausula-blindada">
+            <strong>AVISO LEGAL (Ley 1527 de 2012):</strong> El trabajador autoriza a <strong>DISTRILECO CAUCASIA SAS</strong> a descontar de su nómina la cuota mencionada. La empresa actúa como agente retenedor. En caso de retiro, se autoriza el descuento de saldos pendientes de las prestaciones sociales.
+        </div>
+
+        <div style="margin-top: 60px; display: flex; justify-content: space-between; text-align: center;">
+            <div style="width: 45%; border-top: 1px solid #000; padding-top: 5px;">Firma del Trabajador</div>
+            <div style="width: 45%; border-top: 1px solid #000; padding-top: 5px;">Autorizado por Gerencia</div>
+        </div>
+
+        <div class="legal-footer">
+            Generado por <strong>VIBRAS POSITIVAS HM</strong> &copy; 2026 | Derechos de Autor Reservados
+        </div>
+        
+        <button class="no-print btn-analizar" onclick="window.print()" style="margin-top:30px;">🖨️ IMPRIMIR REPORTE OFICIAL</button>
+    </div>
+</div>
+
+<script>
+    function actualizarReloj() {
+        const op = { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        document.getElementById('reloj').innerText = `Colombia: ${new Date().toLocaleDateString('es-CO')} | ${new Date().toLocaleTimeString('es-CO', op)}`;
+    }
+    setInterval(actualizarReloj, 1000);
+
+    function ejecutarAnalisisFinal() {
+        const d = {
+            nom: document.getElementById('nom').value,
+            cc: document.getElementById('cc').value,
+            cargo: document.getElementById('cargo').value,
+            tiempo: document.getElementById('tiempo').value,
+            banco: document.getElementById('banco').value,
+            tipo: document.getElementById('tipo').value,
+            sal: parseFloat(document.getElementById('sal').value),
+            cuo: parseFloat(document.getElementById('cuo').value),
+            fecha: new Date().toLocaleString('es-CO')
+        };
+
+        if(!d.nom || !d.cc) return alert("Ingrese nombre y cédula.");
+
+        const por = (d.cuo / d.sal) * 100;
+        document.getElementById('rep-nom').innerText = d.nom;
+        document.getElementById('rep-cc').innerText = d.cc;
+        document.getElementById('rep-cargo').innerText = d.cargo;
+        document.getElementById('rep-tiempo').innerText = d.tiempo;
+        document.getElementById('rep-banco').innerText = d.banco;
+        document.getElementById('rep-sal').innerText = "$ " + d.sal.toLocaleString();
+        document.getElementById('rep-cuo').innerText = "$ " + d.cuo.toLocaleString();
+        document.getElementById('rep-por').innerText = por.toFixed(2) + "%";
+        document.getElementById('rep-fecha').innerText = d.fecha;
+
+        let h = JSON.parse(localStorage.getItem('distrileco_estudios')) || [];
+        h.unshift(d);
+        localStorage.setItem('distrileco_estudios', JSON.stringify(h));
+        
+        renderBackup();
+        document.getElementById('reporte-final').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('reporte-final').offsetTop, behavior: 'smooth' });
+    }
+
+    function renderBackup() {
+        const l = document.getElementById('lista-historial');
+        let h = JSON.parse(localStorage.getItem('distrileco_estudios')) || [];
+        l.innerHTML = h.map((i, idx) => `
+            <div class="historial-item" onclick="recuperar(${idx})">
+                <strong>👤 ${i.nom}</strong><br>
+                <small>🏦 ${i.banco} | 💰 $${i.cuo.toLocaleString()}</small>
+            </div>
+        `).join('') || "<p style='font-size:12px;'>Sin registros.</p>";
+    }
+
+    function recuperar(idx) {
+        const d = JSON.parse(localStorage.getItem('distrileco_estudios'))[idx];
+        document.getElementById('nom').value = d.nom;
+        document.getElementById('cc').value = d.cc;
+        document.getElementById('banco').value = d.banco;
+        document.getElementById('sal').value = d.sal;
+        document.getElementById('cuo').value = d.cuo;
+        ejecutarAnalisisFinal();
+    }
+
+    function borrarTodo() { if(confirm("¿Borrar historial?")) { localStorage.removeItem('distrileco_estudios'); renderBackup(); } }
+    renderBackup();
+</script>
+</body>
+</html>
